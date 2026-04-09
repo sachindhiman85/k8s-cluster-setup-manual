@@ -5,7 +5,6 @@
 📌 Overview
 
 This repository provides a step-by-step guide to build a Highly Available Kubernetes cluster using kubeadm, with a fully self-managed setup.
-
 No cloud load balancer required — everything is configured manually for maximum control and real-world understanding.
 ----------------------------------------------------------
 ##########################################################
