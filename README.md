@@ -1,29 +1,37 @@
 ##########################################################
-# k8s-cluster-setup-manual
-Kubernetes HA Cluster Setup using kubeadm (3 Masters + 2 Workers + HAProxy)
+# Kubernetes Cluster Setup using Kubeadm (Step-by-Step Guide with Containerd, HA, and Best Practices)
+3 Masters + 2 Workers + HAProxy
+----------------------------------------------------------
+📌 Overview
+
+This repository provides a step-by-step guide to build a Highly Available Kubernetes cluster using kubeadm, with a fully self-managed setup.
+
+No cloud load balancer required — everything is configured manually for maximum control and real-world understanding.
+----------------------------------------------------------
 ##########################################################
+
 - Steps Overview
   
 ##########################################################
-1. Setup Load Balancer (HAProxy)
-2. Prepare All Nodes (Masters + Workers)
-3. Install Container Runtime 
-4. Install Kubernetes Components
-5. Initialize First Master Node
-6. Configure kubectl Access
-7. Install Pod Network (Calico)
-8. Join Remaining Master Nodes
-9. Join Worker Nodes
-10. Verify Cluster
+- Architecture
+- Prerequisites
+- Step 1: Node Preparation
+- Step 2: Install Containerd
+- Step 3: Install Kubernetes Components
+- Step 4: Initialize Control Plane
+- Step 5: Join Worker Nodes
+- Step 6: Networking (Calico)
+- Step 7: Verification
+- Step 8: Troubleshooting
 
 ##########################################################
 
-This guide helps you set up a Highly Available Kubernetes cluster using:
+This guide helps you set up a Highly Available Kubernetes cluster from scratch, using:
 
-- kubeadm
-- containerd
-- HAProxy (no cloud load balancer)
-- Calico networking
+- kubeadm for cluster setup and management
+- containerd as the container runtime
+- HAProxy for load balancing (no cloud load balancer required)
+- Calico for networking and policy enforcement
 
 #########################################################
 
@@ -39,12 +47,19 @@ This guide helps you set up a Highly Available Kubernetes cluster using:
 
 #########################################################
 
-- Ubuntu 22.04 on all nodes
-- All nodes in same network (VPC/subnet)
-- Security group allows internal communication:
-  - 172.xx.xx.0/16 → All traffic (for setup)
-  - Root or sudo access
-    
+Before starting, make sure your environment meets the following requirements:
+- 🖥️ Infrastructure
+  - Ubuntu 22.04 installed on all nodes
+  - All nodes are in the same network (same VPC or subnet)
+  - Stable network connectivity between all nodes
+- 🔐 Network & Security
+  - Security group or firewall rules allow internal communication
+  - 172.xx.xx.0/16 → All traffic (required during setup phase)
+  - Required ports are open between control plane and worker nodes
+- 👤 Access & Permissions
+  - Root or sudo access on all nodes
+  - Passwordless SSH access recommended for smooth setup
+
 #########################################################
 
 - Step 1: Configure HAProxy (Load Balancer)
